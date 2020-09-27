@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ESignCreateFolderFunction/ESignCreateFolder.iml" filepath="$PROJECT_DIR$/ESignCreateFolderFunction/ESignCreateFolder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ESignSendDraftFolderFunction/ESignSendDraftFolder.iml" filepath="$PROJECT_DIR$/ESignSendDraftFolderFunction/ESignSendDraftFolder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PreSignFunction/PreSign.iml" filepath="$PROJECT_DIR$/PreSignFunction/PreSign.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lambda.iml" filepath="$PROJECT_DIR$/lambda.iml" />
+    </modules>
+  </component>
+</project>

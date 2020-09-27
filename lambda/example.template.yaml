@@ -1,0 +1,87 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  AWS
+
+  Sample SAM Template for AWS
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 20
+  Api:
+    Cors:
+      AllowOrigin: "'*'"
+      AllowMethods: "'POST, OPTIONS'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+
+Resources:
+  ESignSendDraftFolderFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ESignSendDraftFolderFunction
+      Handler: esignsenddraftfolder.App::handleRequest
+      Runtime: java11
+      MemorySize: 2048
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          TOKEN_ENDPOINT: "https://www.esigngenie.com/esign/api/oauth2/access_token"
+          SEND_DRAFT_ENDPOINT: "https://www.esigngenie.com/esign/api/folders/sendDraftFolder"
+          ESIGN_CLIENT_ID: ""
+          ESIGN_CLIENT_SECRET: ""
+      Events:
+        CreateFolder:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /senddraft
+            Method: post
+  ESignCreateFolderFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ESignCreateFolderFunction
+      Handler: esigncreatefolder.App::handleRequest
+      Runtime: java11
+      MemorySize: 2048
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          TOKEN_ENDPOINT: "https://www.esigngenie.com/esign/api/oauth2/access_token"
+          FOLDER_ENDPOINT: "https://www.esigngenie.com/esign/api/folders/createfolder"
+          ESIGN_CLIENT_ID: ""
+          ESIGN_CLIENT_SECRET: ""
+      Events:
+        CreateFolder:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /createfolder
+            Method: post
+  PreSignFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: PreSignFunction
+      Handler: presign.App::handleRequest
+      Runtime: java11
+      MemorySize: 2048
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          CAPTCHA_SECRET: ""
+          CAPTCHA_ENDPOINT: "https://www.google.com/recaptcha/api/siteverify"
+      Events:
+        Presign:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /presign
+            Method: post
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  PreSignApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  PreSignFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt PreSignFunction.Arn
+  PreSignFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt PreSignFunctionRole.Arn

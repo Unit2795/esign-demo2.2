@@ -1,0 +1,36 @@
+service: esign-demo2-node-lambda
+plugins:
+  - serverless-dotenv-plugin
+
+custom:
+  dotenv:
+    basePath: './../'
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+functions:
+  senddraft:
+    handler: handler.senddraft
+    events:
+      - http:
+          path: senddraft
+          method: post
+          cors: true
+  createfolder:
+    handler: handler.createfolder
+    events:
+      - http:
+          path: createfolder
+          method: post
+          cors: true
+  presign:
+    handler: handler.presign
+    events:
+      - http:
+          path: presign
+          method: post
+          cors: true

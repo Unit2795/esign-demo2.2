@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="dotenv.net" Version="2.1.1" />
+      <PackageReference Include="Flurl" Version="3.0.0-pre4" />
+      <PackageReference Include="Flurl.Http" Version="3.0.0-pre4" />
+      <PackageReference Include="Nancy" Version="2.0.0" />
+      <PackageReference Include="Nancy.Hosting.Self" Version="2.0.0" />
+    </ItemGroup>
+
+</Project>

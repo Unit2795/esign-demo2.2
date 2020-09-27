@@ -1,0 +1,8 @@
+*/node_modules
+.env
+kotlin/out/
+java/out/
+express/build/
+*.log
+.aws-sam
+template.yaml
